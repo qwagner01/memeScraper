@@ -1,6 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
+# wvNg1MtuMnscZb_7XM_OkiEPmro
+import praw
 
+reddit = praw.Reddit(client_id='hI4Fwgeo1ghtMA', client_secret='wvNg1MtuMnscZb_7XM_OkiEPmro', user_agent='memeScraper')
 the_memes = []
 
 subreddits = [
@@ -22,9 +25,11 @@ headers = {'Accept-Encoding': 'identity'}
 def getMemes(subreddit):
     html = requests.get(url+subreddit, headers=headers)
     soup = BeautifulSoup(html.content, features="html5lib")
-    images = []
+    memes = []
     for img in soup.findAll('img'):
-        print(img)
-    print(soup)
-
+        memes.extend(img['src'])
+        print(img['src'])
+    # print(memes)
+    if len(memes) == 0:
+        print(soup)
 getMemes(subreddits[1])
